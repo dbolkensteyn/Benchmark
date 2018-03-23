@@ -630,7 +630,12 @@ public class BenchmarkScore {
         else if ( filename.endsWith( ".json" ) ) {
             String line1 = getLine( fileToParse, 0 );
             String line2 = getLine( fileToParse, 1 );
-            if ( line2.contains("Coverity") || line2.contains("formatVersion") ) {
+
+            if ( line1.startsWith("{\"total\":") ) {
+            	tr = new SonarQubeReader().parse( fileToParse );
+						}
+
+            else if ( line2.contains("Coverity") || line2.contains("formatVersion") ) {
                 tr = new CoverityReader().parse( fileToParse );
             }
         }
@@ -684,10 +689,6 @@ public class BenchmarkScore {
 
             else if ( line2.startsWith( "<detailedreport" )) {
                 tr = new VeracodeReader().parse( fileToParse );
-            }
-
-            else if ( line1.startsWith( "<total" )) {
-                tr = new SonarQubeReader().parse( fileToParse );
             }
             
             else if ( line1.contains( "<OWASPZAPReport" ) || line2.contains( "<OWASPZAPReport" )) {
