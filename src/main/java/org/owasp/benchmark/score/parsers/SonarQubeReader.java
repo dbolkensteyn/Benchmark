@@ -64,7 +64,7 @@ public class SonarQubeReader extends Reader {
                 int testCaseNumber = Integer.valueOf(matcher.group(1));
 
                 String rule = (String)issue.get("rule");
-                if (RULE_TO_CWE.containsKey(rule)) {
+                if (!RULE_TO_CWE.containsKey(rule)) {
                     continue;
                 }
                 int cwe = RULE_TO_CWE.get(rule);
@@ -74,8 +74,6 @@ public class SonarQubeReader extends Reader {
                 TestCaseResult tcr = new TestCaseResult();
                 tcr.setNumber(testCaseNumber);
                 tcr.setCWE(cwe);
-                tcr.setConfidence(5);
-                tcr.setCategory(message);
                 tcr.setEvidence(message);
 
                 tr.put(tcr);
