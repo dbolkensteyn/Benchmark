@@ -35,7 +35,11 @@ public class SonarQubeReader extends Reader {
 
     private static final Pattern BENCHMARK_TEST_REGEX = Pattern.compile(BenchmarkScore.BENCHMARKTESTNAME + "([0-9]++)\\.java");
     private static final Map<String, Integer> RULE_TO_CWE = ImmutableMap.<String, Integer>builder()
-      .put("SonarSecurity:S3649", 89)
+      .put("squid:S3649", 89) // SQL injection
+      .put("squid:S2083", 22) // Path traversal
+      .put("squid:S2078", 90) // LDAP injection
+      .put("squid:S2076", 78) // Command injection
+      .put("squid:S2091", 643) // XPath injection
       .build();
 
     public TestResults parse(File f) {
